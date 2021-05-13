@@ -1,3 +1,5 @@
+name: PR-Dependency
+
 on: [push, pull_request]
 
 jobs:
