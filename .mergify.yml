@@ -9,7 +9,7 @@ pull_request_rules:
       - base=main
     #   - "#approved-reviews-by>=2"
       - check-success=build
-      - check-success=Check Dependencies
+      # - check-success=Check Dependencies
     actions:
       queue:
         name: default
