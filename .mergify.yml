@@ -1,16 +1,15 @@
 queue_rules:
   - name: default
     conditions:
-      - check-success=PR-Dependency
       - check-success=Github-CI
-
+      - check-success=PR-Dependency
 pull_request_rules:
   - name: merge using the merge queue
     conditions:
       - base=main
     #   - "#approved-reviews-by>=2"
-      - check-success=PR-Dependency
       - check-success=Github-CI
+      - check-success=PR-Dependency
     actions:
       queue:
         name: default
