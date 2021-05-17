@@ -13,12 +13,13 @@ pull_request_rules:
     actions:
       queue:
         name: default
-    
- - name: automatic update for PR that failed pr-dependency-check and is marked as "ready-to-merge"
+        
+  - name: automatic update for PR that failed pr-dependency-check and is marked as "ready-to-merge"
     conditions:
+      - base=main
       - -conflict # skip PRs with conflicts
       - -draft # filter-out GH draft PRs
-      - check-failed=Check Dependencies
+      - check-failure=Check Dependencies
       - label=ready-to-merge
     actions:
       update:
