@@ -5,14 +5,31 @@ queue_rules:
       - check-success=build
       
 pull_request_rules:
-  - name: automatic merge for PR marked as "ready-to-merge"
+  - name: automatic merge (using queue) for PR marked as "ready-to-merge"
     conditions:
       - base=main
-      - check-success=build
+      - -conflict # skip PRs with conflicts
+      - -draft # filter-out GH draft PRs
+      - label!=urgent-merge # skip adding urgent PRs to the queue
       - label=ready-to-merge
+      - check-success=Check Dependencies
+      - check-success=build
     actions:
       queue:
         name: default
+        
+  - name: automatic urgent merge (bypass queue) for PR marked as "urgent-merge"
+    conditions:
+      - base=main
+      - -conflict # skip PRs with conflicts
+      - -draft # filter-out GH draft PRs
+      - check-success=build
+      - label=urgent-merge # skip adding urgent PRs to the queue
+    actions:
+      merge:
+        method: merge
+        strict: smart+fasttrack
+        strict_method: merge
         
   - name: automatic update for PR that failed pr-dependency-check and is marked as "ready-to-merge"
     conditions:
